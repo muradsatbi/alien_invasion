@@ -5,6 +5,7 @@ import pygame
 from settings import Settings
 # импортируем класс из модуля с настройками
 from ship import Ship
+# импортируем класс ship из модуля Ship
 
 
 class AlienInvasion:
@@ -40,6 +41,9 @@ class AlienInvasion:
         # Цвета в pygame задаются в схеме RGB
 
         self.ship = Ship(self)
+        # Создаем объект класса Ship и передаем ему экземпляр AlienInvasion
+        # при помощи передачи аргумента self классу Ship. Присваиваем все это
+        # объекту self.ship
 
     def run_game(self):
         """Запуск основного цикла игры."""
@@ -61,7 +65,10 @@ class AlienInvasion:
             # settings
 
             self.screen.fill(self.settings.bg_color)
+
             self.ship.blitme()
+            # вызов этого метода blitme после заполнения фона выводит это
+            # изображение поверх фона
 
             # Отображение последнего прорисованного экрана
             pygame.display.flip()
