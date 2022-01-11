@@ -29,10 +29,18 @@ class AlienInvasion:
         # что позволяет работать с ним во всех методах класса
         # Часть экрана в PyGame называется поверхностью
 
-        self.screen = pygame.display.set_mode((self.settings.screen_width,
-                                               self.settings.screen_height))
+        # self.screen = pygame.display.set_mode((self.settings.screen_width,
+        #                                      self.settings.screen_height))
         # задаем переменную self.screen уже через переменные объекта
         # self.settings screen_width и screen_height
+
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        # Метод pygame.FULLSCREEN получает и присваивает self.screen широту и
+        # высоту экрана
+        self.settings.screen_width = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
+        # Просто присваиваем атрибутам новые значения. На данном этапе это ни
+        # на что не влияет
 
         pygame.display.set_caption("Инопланетное вторжение")
         # Задается заголовок игрового экрана
