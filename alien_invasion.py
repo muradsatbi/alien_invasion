@@ -68,22 +68,32 @@ class AlienInvasion:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 # проверка типа события на тип нажатие клавиши
-                if event.key == pygame.K_RIGHT:
-                    # проверка нажания клавиши вправо
-                    self.ship.moving_right = True
-                    # переключение флажка в True
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = True
-                    # переключение флажка в True
+                self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 # проверка типа события на тип нажатие клавиши
-                if event.key == pygame.K_RIGHT:
-                    # проверка нажания клавиши вправо
-                    self.ship.moving_right = False
-                    # переключение флажка в True
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = False
-                    # переключение флажка в True
+                self._check_keyup_events(event)
+
+    def _check_keydown_events(self, event):
+        if event.key == pygame.K_RIGHT:
+            # проверка нажания клавиши вправо
+            self.ship.moving_right = True
+            # переключение флажка в True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+            # переключение флажка в True
+        elif event.key == pygame.K_q:
+            sys.exit()
+            # Если нажатие клавиши равно q: выход из системы
+
+    def _check_keyup_events(self, event):
+        if event.key == pygame.K_RIGHT:
+            # проверка нажания клавиши вправо
+            self.ship.moving_right = False
+            # переключение флажка в True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
+            # переключение флажка в True
+
 
     def _update_screen(self):
         # self.screen.fill(self.bg_color)
