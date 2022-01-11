@@ -14,7 +14,7 @@ class AlienInvasion:
     """Класс для управления ресурсами и поведением игры"""
 
     def __init__(self):
-        """Инициализирует игру и создает игровые ресурсы."""
+        """Инициализирует игру и создает игровые ресурсы"""
         pygame.init()
 
         self.settings = Settings()
@@ -24,7 +24,7 @@ class AlienInvasion:
 
         # self.screen = pygame.display.set_mode((1200, 800))
         # Создает окно, в котором будет идти работа, аргумент - кортеж,
-        # представляющий собой размеры игрового окна.
+        # представляющий собой размеры игрового окна
         # Объект окна создается присваивается атрибуту self.screen,
         # что позволяет работать с ним во всех методах класса
         # Часть экрана в PyGame называется поверхностью
@@ -51,8 +51,11 @@ class AlienInvasion:
         """Запуск основного цикла игры."""
         while True:
             self._check_events()
+            # Отслеживание событий клавиатуры и мыши
+            self.ship.update()
+            # Вызов метода обновления корабля с учетом новых событий
             self._update_screen()
-            # Отслеживание событий клавиатуры и мыши.
+            # Обновляет экран
 
     def _check_events(self):
         # Событие - действие, выполняемое пользователем во время игры
@@ -63,6 +66,24 @@ class AlienInvasion:
                 # нажатие крестика в правом углу, то система выходит из
                 # игрового окна
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                # проверка типа события на тип нажатие клавиши
+                if event.key == pygame.K_RIGHT:
+                    # проверка нажания клавиши вправо
+                    self.ship.moving_right = True
+                    # переключение флажка в True
+                elif event.key == pygame.K_LEFT:
+                    self.ship.moving_left = True
+                    # переключение флажка в True
+            elif event.type == pygame.KEYUP:
+                # проверка типа события на тип нажатие клавиши
+                if event.key == pygame.K_RIGHT:
+                    # проверка нажания клавиши вправо
+                    self.ship.moving_right = False
+                    # переключение флажка в True
+                elif event.key == pygame.K_LEFT:
+                    self.ship.moving_left = False
+                    # переключение флажка в True
 
     def _update_screen(self):
         # self.screen.fill(self.bg_color)
