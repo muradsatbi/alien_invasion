@@ -2,6 +2,9 @@ import sys
 
 import pygame
 
+from settings import Settings
+# импортируем класс из модуля с настройками
+
 
 class AlienInvasion:
     """Класс для управления ресурсами и поведением игры"""
@@ -10,18 +13,29 @@ class AlienInvasion:
         """Инициализирует игру и создает игровые ресурсы."""
         pygame.init()
 
-        self.screen = pygame.display.set_mode((1200, 800))
-        # Создает окно, котором будет идти работа, аргумент - кортеж,
+        self.settings = Settings()
+        # загружаем все настройки из модуля settings в переменную self.settings
+        # нужно удалить все присваивания настроек внутри этого кода, но мы их
+        # просто закомментим
+
+        # self.screen = pygame.display.set_mode((1200, 800))
+        # Создает окно, в котором будет идти работа, аргумент - кортеж,
         # представляющий собой размеры игрового окна.
         # Объект окна создается присваивается атрибуту self.screen,
         # что позволяет работать с ним во всех методах класса
         # Часть экрана в PyGame называется поверхностью
+
+        self.screen = pygame.display.set_mode((self.settings.screen_width,
+                                               self.settings.screen_height))
+        # задаем переменную self.screen уже через переменные объекта
+        # self.settings screen_width и screen_height
+
         pygame.display.set_caption("Инопланетное вторжение")
         # Задается заголовок игрового экрана
 
         # Назначим цвет фона, чтобы потом им заменить черный цвет по
         # умолчанию. Делается это в методе __init__
-        self.bg_color = (2, 86, 105)
+        # self.bg_color = (2, 86, 105)
         # Цвета в pygame задаются в схеме RGB
 
     def run_game(self):
@@ -38,8 +52,12 @@ class AlienInvasion:
                     sys.exit()
 
             # При каждом переходе цикла прорисовывается экран заданного цвета.
-            self.screen.fill(self.bg_color)
+            # self.screen.fill(self.bg_color)
             # В этом методе экран при каждом цикле заполняется заданным цветом.
+            # Заменяем параметры из внутреннего кода на параметры из модуля
+            # settings
+
+            self.screen.fill(self.settings.bg_color)
 
             # Отображение последнего прорисованного экрана
             pygame.display.flip()
