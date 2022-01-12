@@ -17,7 +17,7 @@ class Bullet(Sprite):
                                 self.settings.bullet_height)
         # создает прямоугольник пули и присваивает ему значения ширины и
         # высоты из настроек
-        self.rect.midtop = ai_game.ship.midtop
+        self.rect.midtop = ai_game.ship.rect.midtop
         # выравнивает середину верха пули и середину верха корабля
 
         self.y = float(self.rect.y)
@@ -25,7 +25,7 @@ class Bullet(Sprite):
 
     def update(self):
         # Перемещает пулю вверх по экрану
-        self.y  -= self.settings.bullet_speed
+        self.y -= self.settings.bullet_speed
         # Обновление позиции снаряда в вещественном формате
         self.rect.y  = self.y
         # Обновление позиции прямоугольника

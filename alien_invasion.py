@@ -5,9 +5,9 @@ import pygame
 from settings import Settings
 # импортируем класс из модуля с настройками
 from ship import Ship
-
-
-# импортируем класс ship из модуля Ship
+# импортируем класс Ship из модуля ship
+from bullet import Bullet
+# импортируем класс Bullet из модуля bullet
 
 
 class AlienInvasion:
@@ -55,13 +55,21 @@ class AlienInvasion:
         # при помощи передачи аргумента self классу Ship. Присваиваем все это
         # объекту self.ship
 
+        self.bullets = pygame.sprite.Group()
+        # Создается группа
+
     def run_game(self):
         """Запуск основного цикла игры."""
         while True:
             self._check_events()
             # Отслеживание событий клавиатуры и мыши
+
             self.ship.update()
             # Вызов метода обновления корабля с учетом новых событий
+
+            self._update_bullets()
+            # Вызов метода обновления пуль
+
             self._update_screen()
             # Обновляет экран
 
@@ -92,15 +100,25 @@ class AlienInvasion:
         elif event.key == pygame.K_q:
             sys.exit()
             # Если нажатие клавиши равно q: выход из системы
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
-            # проверка нажания клавиши вправо
+            # проверка нажатия клавиши вправо
             self.ship.moving_right = False
             # переключение флажка в True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
             # переключение флажка в True
+
+    def _fire_bullet(self):
+        if len(self.bullets) < self.settings.bullets_allowed:
+            # Условие, если длина группы пуль меньше ограничителя из settings
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+            # Присваиваем переменной new_bullet объект класса Bullet() и затем
+            # добавляем этот объект в группу bullets
 
     def _update_screen(self):
         # self.screen.fill(self.bg_color)
@@ -114,10 +132,28 @@ class AlienInvasion:
         # вызов этого метода blitme после заполнения фона выводит это
         # изображение поверх фона
 
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
+        # Перебираем все пули из bullets методом sprites и применяем к
+        # каждому из них метод draw для обрисовки
+
         # Отображение последнего прорисованного экрана
         pygame.display.flip()
         # Этот "метод" постоянно обновляет экран, показывая новые
         # изображения и скрывая старые
+
+    def _update_bullets(self):
+        self.bullets.update()  # как метод update() из класса Bullet работает
+        # здест? Как?
+        # Вызов update для группы приводит к автоматическому вызову
+        # update для каждого спрайта в группе
+
+        for bullet in self.bullets.copy():
+            # перебирает пули в копии bullets
+            if bullet.rect.bottom <= 0:
+                # проверяет условие, если низ пули выше верха экрана (0)
+                self.bullets.remove(bullet)
+                # удаляет эту пулю из основной группы
 
 
 # if __name__ == 'main':
