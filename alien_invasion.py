@@ -102,7 +102,6 @@ class AlienInvasion:
             self.ship.moving_left = False
             # переключение флажка в True
 
-
     def _update_screen(self):
         # self.screen.fill(self.bg_color)
         # В этом методе экран при каждом цикле заполняется заданным цветом.
