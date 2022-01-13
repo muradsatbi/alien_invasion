@@ -8,6 +8,7 @@ from ship import Ship
 # импортируем класс Ship из модуля ship
 from bullet import Bullet
 # импортируем класс Bullet из модуля bullet
+from alien import Alien
 
 
 class AlienInvasion:
@@ -58,6 +59,10 @@ class AlienInvasion:
         self.bullets = pygame.sprite.Group()
         # Создается группа
 
+        self.aliens = pygame.sprite.Group()
+
+        self._create_fleet()
+
     def run_game(self):
         """Запуск основного цикла игры."""
         while True:
@@ -72,6 +77,10 @@ class AlienInvasion:
 
             self._update_screen()
             # Обновляет экран
+
+    def _create_fleet(self):
+        alien = Alien(self)
+        self.aliens.add(alien)
 
     def _check_events(self):
         # Событие - действие, выполняемое пользователем во время игры
@@ -137,6 +146,9 @@ class AlienInvasion:
         # Перебираем все пули из bullets методом sprites и применяем к
         # каждому из них метод draw для обрисовки
 
+        self.aliens.draw(self.screen)
+        # прорисовываем пришельцев на экране
+
         # Отображение последнего прорисованного экрана
         pygame.display.flip()
         # Этот "метод" постоянно обновляет экран, показывая новые
@@ -144,7 +156,10 @@ class AlienInvasion:
 
     def _update_bullets(self):
         self.bullets.update()  # как метод update() из класса Bullet работает
-        # здест? Как?
+        # здесь? Как?
+        # Понял: bullet появляется в bullets в методе _fire_bullet, а метод
+        # update работает по отношению к bullets потому что это спрайт из
+        # bullet
         # Вызов update для группы приводит к автоматическому вызову
         # update для каждого спрайта в группе
 
